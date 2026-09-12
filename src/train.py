@@ -39,3 +39,7 @@ def normalize(data):
 
     norm = [(x - min_val) / (max_val - min_val) for x in data]
     return norm, min_val, max_val
+
+
+def estimate_price(mileage: float, theta0: float, theta1: float) -> float:
+    return theta0 + (theta1 * mileage)
