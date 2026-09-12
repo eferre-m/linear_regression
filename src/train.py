@@ -3,6 +3,7 @@ import csv
 KM_COLUMN = 'km'
 PRICE_COLUMN = 'price'
 
+
 def load_data(filename):
     km_list = []
     price_list = []
@@ -24,3 +25,17 @@ def load_data(filename):
     except ValueError as e:
         print(f"Error: invalid data in file - {e}")
         return [], []
+
+
+def normalize(data):
+    if not data:
+        return [], 0, 0
+
+    min_val = min(data)
+    max_val = max(data)
+
+    if max_val == min_val:
+        print("Warning: all values are equal")
+
+    norm = [(x - min_val) / (max_val - min_val) for x in data]
+    return norm, min_val, max_val
