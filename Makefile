@@ -45,9 +45,9 @@ plot: install ## Bonus: plot the dataset and the regression line
 	@$(VENV_PY) src/plot.py
 	@echo "$(GREEN)Plot saved to plot.png$(NC)"
 
-precision: install ## Bonus: compute MAE, RMSE and R^2 of the model
+metrics: install ## Bonus: compute MAE, RMSE and R^2 of the model
 	@echo "$(YELLOW)Computing precision metrics...$(NC)"
-	@$(VENV_PY) src/precision.py
+	@$(VENV_PY) src/metrics.py
 
 flake: install ## Run flake8 linter on src
 	@echo "$(YELLOW)Running flake8 linter...$(NC)"
