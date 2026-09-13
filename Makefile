@@ -37,7 +37,7 @@ train: install ## Train the model on data/data.csv and save theta.json
 	@echo "$(GREEN)Training done.$(NC)"
 
 predict: install ## Prompt for a mileage and predict its price
-	@echo "$(YELLOW)Enter a mileage to get a price estimate:$(NC)"
+	@echo "$(YELLOW)Enter a mileage to get a price estimate (or 'q' to quit):$(NC)"
 	@$(VENV_PY) src/predict.py
 
 plot: install ## Bonus: plot the dataset and the regression line

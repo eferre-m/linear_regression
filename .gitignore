@@ -1,6 +1,11 @@
-.DS_Store
-
+# Model file
 model.csv
+
+# Plot file
+plot.png
+
+# Mac
+.DS_Store
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -4,7 +4,7 @@ KM_COLUMN = 'km'
 PRICE_COLUMN = 'price'
 
 
-def load_data(filename: str) -> tuple[list[float], list[float]]:
+def load_data(filename: str) -> tuple[list[float], list[float]] | None:
     km_list = []
     price_list = []
 
@@ -18,13 +18,13 @@ def load_data(filename: str) -> tuple[list[float], list[float]]:
         return km_list, price_list
     except FileNotFoundError:
         print(f"Error: file '{filename}' not found")
-        return [], []
+        return None
     except KeyError as e:
         print(f"Error: column {e} not found in CSV")
-        return [], []
+        return None
     except ValueError as e:
         print(f"Error: invalid data in file - {e}")
-        return [], []
+        return None
 
 
 def save_model(theta0_real: float, theta1_real: float,
@@ -34,3 +34,25 @@ def save_model(theta0_real: float, theta1_real: float,
             f.write(f"{theta0_real},{theta1_real}\n")
     except Exception as e:
         print(f"Error saving model: {e}")
+
+
+def load_model(filename: str) -> tuple[float, float] | None:
+    """
+    Loads trained model parameters from file
+    Returns: (theta0, theta1) or (0, 0) if error occurs
+    """
+    try:
+        with open(filename, 'r') as f:
+            line = f.readline().strip()
+            theta0, theta1 = map(float, line.split(','))
+            return theta0, theta1
+    except FileNotFoundError:
+        print(f"Error: file '{filename}' not found")
+        print("   Run 'python train.py' first to train the model")
+        return None
+    except ValueError as e:
+        print(f"Error: invalid format in {filename} - {e}")
+        return None
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        return None

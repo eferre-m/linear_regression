@@ -58,10 +58,12 @@ def train(km_norm: list[float], price_norm: list[float],
 if __name__ == "__main__":
     print("Starting training process for car prices.\n")
 
-    km, price = load_data('data/data.csv')
-    if not km or not price:
+    data = load_data('data/data.csv')
+    if data is None:
         print("Could not load data. Exiting.")
         exit(1)
+
+    km, price = data
 
     print("Normalizing data")
     km_norm, km_min, km_max = normalize(km)
