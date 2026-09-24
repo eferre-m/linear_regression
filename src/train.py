@@ -35,7 +35,7 @@ def calculate_gradient(km_norm: list[float],
 
 
 def train(km_norm: list[float], price_norm: list[float],
-          learning_rate=DEFAULT_LEARNING_RATE, steps=DEFAULT_STEPS,
+          learning_rate: float=DEFAULT_LEARNING_RATE, steps: int=DEFAULT_STEPS,
           verbose=False) -> tuple[float, float]:
     theta0 = 0
     theta1 = 0
@@ -68,7 +68,6 @@ if __name__ == "__main__":
     print("Normalizing data")
     km_norm, km_min, km_max = normalize(km)
     price_norm, price_min, price_max = normalize(price)
-    
     print("Training model")
     theta0_norm, theta1_norm = train(km_norm, price_norm, verbose=True)
 
@@ -78,8 +77,6 @@ if __name__ == "__main__":
         theta1_norm,
         km_min,
         km_max,
-        price_min,
-        price_max
     )
 
     print("Saving model parameters")

@@ -5,8 +5,8 @@ PRICE_COLUMN = 'price'
 
 
 def load_data(filename: str) -> tuple[list[float], list[float]] | None:
-    km_list = []
-    price_list = []
+    km_list:list[float] = []
+    price_list:list[float] = []
 
     try:
         with open(filename, 'r') as f:

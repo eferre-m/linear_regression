@@ -1,4 +1,7 @@
-def normalize(data: list) -> tuple[list[float], float, float]:
+"""Module providing functions for the model"""
+
+def normalize(data: list[float]) -> tuple[list[float], float, float]:
+    """Function for normalize"""
     if not data:
         return [], 0, 0
 
@@ -14,12 +17,13 @@ def normalize(data: list) -> tuple[list[float], float, float]:
 
 
 def estimate_price(km: float, theta0: float, theta1: float) -> float:
+    """Function estimating price"""
     return theta0 + (theta1 * km)
 
 
 def denormalize_theta(theta0_norm: float, theta1_norm: float,
-                      km_min: float, km_max: float, price_min: float,
-                      price_max: float) -> tuple[float, float]:
-    theta1_real = theta1_norm * (price_max - price_min) / (km_max - km_min)
-    theta0_real = price_min + (price_max - price_min) * (theta0_norm - theta1_norm * km_min / (km_max - km_min))
+                      km_min: float, km_max: float) -> tuple[float, float]:
+    """Function for denormalize"""
+    theta1_real = theta1_norm / (km_max - km_min)
+    theta0_real = theta0_norm - theta1_norm * km_min
     return theta0_real, theta1_real

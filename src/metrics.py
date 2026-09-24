@@ -3,18 +3,17 @@ from model import estimate_price
 
 
 def metrics(km: list[float], price: list[float], theta0: float, theta1: float) -> None:
-    predictions = []
+
+    predictions: list[float] = []
 
     for k in km:
         prediction = estimate_price(k, theta0, theta1)
         predictions.append(prediction)
-    
-    errors = []
+    errors: list[float] = []
 
     for pred, actual in zip(predictions, price):
         error = pred - actual
         errors.append(error)
-    
     m = len(price)
 
     mae = sum(abs(e) for e in errors) / m
@@ -24,7 +23,7 @@ def metrics(km: list[float], price: list[float], theta0: float, theta1: float) -
     ss_res = sum(e ** 2 for e in errors)
     r2 = 1 - (ss_res / ss_tot) if ss_tot else 0.0
 
-    print(f"Model metrics:\n")
+    print("Model metrics:\n")
     print(f"theta0 = {theta0:.6f}, theta1 = {theta1:.6f}")
     print(f"MAE  (mean absolute error) : {mae:.2f}")
     print(f"RMSE (root mean sq. error) : {rmse:.2f}")
@@ -32,7 +31,8 @@ def metrics(km: list[float], price: list[float], theta0: float, theta1: float) -
 
 
 if __name__ == "__main__":
-    data = load_data('data/data.csv')
+
+    data: tuple[list[float], list[float]] | None = load_data('data/data.csv')
     if data is None:
         print("Could not load data. Exiting.")
         exit(1)
