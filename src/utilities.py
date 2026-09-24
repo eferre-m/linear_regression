@@ -1,3 +1,5 @@
+"""Module for loading and saving data and model parameters"""
+
 import csv
 
 KM_COLUMN = 'km'
@@ -5,11 +7,14 @@ PRICE_COLUMN = 'price'
 
 
 def load_data(filename: str) -> tuple[list[float], list[float]] | None:
+    """Loads data from a CSV file and returns two lists: mileage and price.
+    Returns None if the file cannot be read or if the data is invalid.
+    """
     km_list:list[float] = []
     price_list:list[float] = []
 
     try:
-        with open(filename, 'r') as f:
+        with open(filename, 'r', encoding='utf-8') as f:
             reader = csv.DictReader(f)
             for row in reader:
                 km_list.append(float(row[KM_COLUMN]))
@@ -29,10 +34,11 @@ def load_data(filename: str) -> tuple[list[float], list[float]] | None:
 
 def save_model(theta0_real: float, theta1_real: float,
                filename: str = "model.csv") -> None:
+    """Saves trained model parameters to a CSV file"""
     try:
-        with open(filename, "w") as f:
+        with open(filename, "w", encoding='utf-8') as f:
             f.write(f"{theta0_real},{theta1_real}\n")
-    except Exception as e:
+    except OSError as e:
         print(f"Error saving model: {e}")
 
 
@@ -42,7 +48,7 @@ def load_model(filename: str) -> tuple[float, float] | None:
     Returns: (theta0, theta1) or (0, 0) if error occurs
     """
     try:
-        with open(filename, 'r') as f:
+        with open(filename, 'r', encoding='utf-8') as f:
             line = f.readline().strip()
             theta0, theta1 = map(float, line.split(','))
             return theta0, theta1
@@ -53,6 +59,6 @@ def load_model(filename: str) -> tuple[float, float] | None:
     except ValueError as e:
         print(f"Error: invalid format in {filename} - {e}")
         return None
-    except Exception as e:
+    except OSError as e:
         print(f"Unexpected error: {e}")
         return None

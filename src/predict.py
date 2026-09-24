@@ -1,3 +1,6 @@
+"""Module for predicting car prices based on mileage"""
+
+import sys
 from model import estimate_price
 from utilities import load_model
 
@@ -22,6 +25,7 @@ def validate_mileage_input(km_input: str) -> float | None:
     
 
 def predict(theta0: float, theta1: float) -> None:
+    """Run the interactive price prediction loop for a trained model."""
     print(f"Model equation: price = {theta0:.2f} + ({theta1:.6f}) × km\n")
 
     while True:
@@ -52,8 +56,8 @@ if __name__ == "__main__":
 
     if model is None:
         print("Cannot make predictions without trained model")
-        exit(1)
+        sys.exit(1)
 
-    theta0, theta1 = model
+    model_theta0, model_theta1 = model
 
-    predict(theta0, theta1)
+    predict(model_theta0, model_theta1)

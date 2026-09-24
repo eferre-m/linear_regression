@@ -1,25 +1,29 @@
+"""Module providing functions for metrics"""
+
+import sys
 from utilities import load_data, load_model
 from model import estimate_price
 
 
-def metrics(km: list[float], price: list[float], theta0: float, theta1: float) -> None:
+def metrics(km_data: list[float], prices: list[float], theta0: float, theta1: float) -> None:
+    """Function making metrics and printing it"""
 
     predictions: list[float] = []
 
-    for k in km:
+    for k in km_data:
         prediction = estimate_price(k, theta0, theta1)
         predictions.append(prediction)
     errors: list[float] = []
 
-    for pred, actual in zip(predictions, price):
+    for pred, actual in zip(predictions, prices):
         error = pred - actual
         errors.append(error)
-    m = len(price)
+    m = len(prices)
 
     mae = sum(abs(e) for e in errors) / m
     rmse = (sum(e ** 2 for e in errors) / m) ** 0.5
-    mean_price = sum(price) / m
-    ss_tot = sum((p - mean_price) ** 2 for p in price)
+    mean_price = sum(prices) / m
+    ss_tot = sum((p - mean_price) ** 2 for p in prices)
     ss_res = sum(e ** 2 for e in errors)
     r2 = 1 - (ss_res / ss_tot) if ss_tot else 0.0
 
@@ -42,7 +46,7 @@ if __name__ == "__main__":
     model = load_model("model.csv")
 
     if model is None:
-        exit(1)
+        sys.exit(1)
 
-    theta0, theta1 = model
-    metrics(km, price, theta0, theta1)
+    model_theta0, model_theta1 = model
+    metrics(km, price, model_theta0, model_theta1)

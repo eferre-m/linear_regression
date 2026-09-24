@@ -1,3 +1,5 @@
+""""Module for training a linear regression model to predict car prices based on mileage."""
+
 from model import estimate_price, normalize, denormalize_theta
 from utilities import load_data, save_model
 
@@ -8,6 +10,7 @@ PROGRESS_INTERVAL = 100
 
 def compute_cost(km_norm: list[float], price_norm: list[float],
                  theta0: float, theta1: float) -> float:
+    """Function for computing the cost"""
     m = len(km_norm)
     total_error = 0
 
@@ -21,6 +24,7 @@ def compute_cost(km_norm: list[float], price_norm: list[float],
 def calculate_gradient(km_norm: list[float],
                        price_norm: list[float], theta0: float,
                        theta1: float) -> tuple[float, float]:
+    """Function for calculating the gradient"""
     m = len(km_norm)
     sum_error0 = 0
     sum_error1 = 0
@@ -36,7 +40,8 @@ def calculate_gradient(km_norm: list[float],
 
 def train(km_norm: list[float], price_norm: list[float],
           learning_rate: float=DEFAULT_LEARNING_RATE, steps: int=DEFAULT_STEPS,
-          verbose=False) -> tuple[float, float]:
+          verbose: bool=False) -> tuple[float, float]:
+    """Function for training the model"""
     theta0 = 0
     theta1 = 0
 
@@ -63,13 +68,13 @@ if __name__ == "__main__":
         print("Could not load data. Exiting.")
         exit(1)
 
-    km, price = data
+    km_data, price_data = data
 
     print("Normalizing data")
-    km_norm, km_min, km_max = normalize(km)
-    price_norm, price_min, price_max = normalize(price)
+    km_norm_data, km_min, km_max = normalize(km_data)
+    price_norm_data, price_min, price_max = normalize(price_data)
     print("Training model")
-    theta0_norm, theta1_norm = train(km_norm, price_norm, verbose=True)
+    theta0_norm, theta1_norm = train(km_norm_data, price_norm_data, verbose=True)
 
     print("Denormalizing parameters")
     theta0_real, theta1_real = denormalize_theta(
