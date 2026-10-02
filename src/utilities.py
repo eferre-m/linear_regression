@@ -10,8 +10,8 @@ def load_data(filename: str) -> tuple[list[float], list[float]] | None:
     """Loads data from a CSV file and returns two lists: mileage and price.
     Returns None if the file cannot be read or if the data is invalid.
     """
-    km_list:list[float] = []
-    price_list:list[float] = []
+    km_list: list[float] = []
+    price_list: list[float] = []
 
     try:
         with open(filename, 'r', encoding='utf-8') as f:
@@ -53,7 +53,7 @@ def load_model(filename: str) -> tuple[float, float] | None:
             theta0, theta1 = map(float, line.split(','))
             return theta0, theta1
     except FileNotFoundError:
-        print(f"Error: file '{filename}' not found")
+        print(f"Warning: file '{filename}' not found")
         print("   Run 'python train.py' first to train the model")
         return None
     except ValueError as e:

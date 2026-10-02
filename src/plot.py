@@ -15,14 +15,13 @@ def plot(kms: list[float], price: list[float], t0: float, t1: float):
     y_vals = [estimate_price(x, t0, t1) for x in x_vals]
 
     plt.figure(figsize=(10, 6))
-    
-    plt.scatter(kms, price, color='blue', s=50, 
-               label='Training Data')
-    
-    plt.plot(x_vals, y_vals, color='red', linewidth=2, 
+
+    plt.scatter(kms, price, color='blue', s=50,
+                label='Training Data')
+
+    plt.plot(x_vals, y_vals, color='red', linewidth=2,
              label='Regression Line')
-    
-    
+
     plt.title('Linear Regression')
     plt.xlabel('Mileage (km)')
     plt.ylabel('Price (€)')
@@ -36,7 +35,6 @@ def plot(kms: list[float], price: list[float], t0: float, t1: float):
 
     print("\nDisplaying plot... Close window to exit")
     plt.show()
-
 
 
 if __name__ == "__main__":

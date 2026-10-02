@@ -17,7 +17,7 @@ help: ## Show this help message
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "  %-15s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
 
-venv: ## Create the virtual environment
+venv:
 	@echo "$(BLUE)Creating virtual environment in $(VENV_DIR)...$(NC)"
 	@$(PYTHON) -m venv $(VENV_DIR) 
 
@@ -57,8 +57,8 @@ mypy: install ## Run mypy linter on src
 	@echo "$(YELLOW)Running mypy typecheck...$(NC)"
 	@$(VENV_PY) -m mypy src
 
-clean: ## Remove generated artifacts (theta.json, plot.png), keep the venv
+clean: ## Remove generated artifacts (theta.json, plot.png, model.csv), keep the venv
 	@echo "$(RED)Removing generated artifacts...$(NC)"
-	@rm -f theta.json plot.png
+	@rm -f theta.json plot.png model.csv
 
 .PHONY: help venv install train predict plot precision flake clean fclean re

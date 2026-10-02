@@ -5,7 +5,8 @@ from utilities import load_data, load_model
 from model import estimate_price
 
 
-def metrics(km_data: list[float], prices: list[float], theta0: float, theta1: float) -> None:
+def metrics(km_data: list[float],
+            prices: list[float], theta0: float, theta1: float) -> None:
     """Function making metrics and printing it"""
 
     predictions: list[float] = []

@@ -1,4 +1,5 @@
-""""Module for training a linear regression model to predict car prices based on mileage."""
+""""Module for training a linear regression model
+    to predict car prices based on mileage."""
 
 from model import estimate_price, normalize, denormalize_theta
 from utilities import load_data, save_model
@@ -12,7 +13,7 @@ def compute_cost(km_norm: list[float], price_norm: list[float],
                  theta0: float, theta1: float) -> float:
     """Function for computing the cost"""
     m = len(km_norm)
-    total_error = 0
+    total_error = 0.0
 
     for i in range(m):
         pred = estimate_price(km_norm[i], theta0, theta1)
@@ -26,8 +27,8 @@ def calculate_gradient(km_norm: list[float],
                        theta1: float) -> tuple[float, float]:
     """Function for calculating the gradient"""
     m = len(km_norm)
-    sum_error0 = 0
-    sum_error1 = 0
+    sum_error0 = 0.0
+    sum_error1 = 0.0
 
     for i in range(m):
         pred = estimate_price(km_norm[i], theta0, theta1)
@@ -39,22 +40,27 @@ def calculate_gradient(km_norm: list[float],
 
 
 def train(km_norm: list[float], price_norm: list[float],
-          learning_rate: float=DEFAULT_LEARNING_RATE, steps: int=DEFAULT_STEPS,
-          verbose: bool=False) -> tuple[float, float]:
+          learning_rate: float = DEFAULT_LEARNING_RATE,
+          steps: int = DEFAULT_STEPS,
+          verbose: bool = False) -> tuple[float, float]:
     """Function for training the model"""
-    theta0 = 0
-    theta1 = 0
+    theta0 = 0.0
+    theta1 = 0.0
 
     for step in range(steps):
-        grad_theta0, grad_theta1 = calculate_gradient(km_norm, price_norm, theta0, theta1)
+        grad_theta0, grad_theta1 = calculate_gradient(km_norm,
+                                                      price_norm,
+                                                      theta0, theta1)
 
-        theta0 -= learning_rate * grad_theta0
-        theta1 -= learning_rate * grad_theta1
+        tmp_theta0 = theta0 - learning_rate * grad_theta0
+        tmp_theta1 = theta1 - learning_rate * grad_theta1
+
+        theta0, theta1 = tmp_theta0, tmp_theta1
 
         if verbose and step % PROGRESS_INTERVAL == 0:
             cost = compute_cost(km_norm, price_norm, theta0, theta1)
             print(f"    Iteration {step}: cost = {cost:.6f}")
-    
+
     final_cost = compute_cost(km_norm, price_norm, theta0, theta1)
     print(f"Training completed. Final cost: {final_cost:.6f}")
     return theta0, theta1
@@ -74,7 +80,8 @@ if __name__ == "__main__":
     km_norm_data, km_min, km_max = normalize(km_data)
     price_norm_data, price_min, price_max = normalize(price_data)
     print("Training model")
-    theta0_norm, theta1_norm = train(km_norm_data, price_norm_data, verbose=True)
+    theta0_norm, theta1_norm = train(km_norm_data,
+                                     price_norm_data, verbose=True)
 
     print("Denormalizing parameters")
     theta0_real, theta1_real = denormalize_theta(
@@ -82,6 +89,8 @@ if __name__ == "__main__":
         theta1_norm,
         km_min,
         km_max,
+        price_min,
+        price_max
     )
 
     print("Saving model parameters")
