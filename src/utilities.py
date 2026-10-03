@@ -45,7 +45,7 @@ def save_model(theta0_real: float, theta1_real: float,
 def load_model(filename: str) -> tuple[float, float] | None:
     """
     Loads trained model parameters from file
-    Returns: (theta0, theta1) or (0, 0) if error occurs
+    Returns: (theta0, theta1) or None if error occurs
     """
     try:
         with open(filename, 'r', encoding='utf-8') as f:

@@ -18,8 +18,10 @@ help: ## Show this help message
 
 
 venv:
-	@echo "$(BLUE)Creating virtual environment in $(VENV_DIR)...$(NC)"
-	@$(PYTHON) -m venv $(VENV_DIR) 
+	@if [ ! -d "$(VENV_DIR)" ]; then \
+		echo "$(BLUE)Creating virtual environment in $(VENV_DIR)...$(NC)"; \
+		$(PYTHON) -m venv $(VENV_DIR); \
+	fi
 
 # activate venv: "source .venv/bin/activate"
 
@@ -61,4 +63,4 @@ clean: ## Remove generated artifacts (theta.json, plot.png, model.csv), keep the
 	@echo "$(RED)Removing generated artifacts...$(NC)"
 	@rm -f theta.json plot.png model.csv
 
-.PHONY: help venv install train predict plot precision flake clean fclean re
+.PHONY: help venv install train predict plot metrics clean fclean re
