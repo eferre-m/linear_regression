@@ -14,14 +14,14 @@ def validate_mileage_input(km_input: str) -> float | None:
     except ValueError:
         print("Error: please enter a valid number")
         return None
-    
+
     if not math.isfinite(km):
         print("Error: mileage must be a finite number")
         return None
     if km < 0:
         print("Error: mileage cannot be negative")
         return None
-    if km >= 10000000:
+    if km >= 398669:
         print("Error: mileage is unreasonably high")
         return None
     return km
